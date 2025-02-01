@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { AuthContext } from '../../context/AuthProvider'
 
-const Header = (props) => {
-  
-  const logOut = ()=>{
-    localStorage.setItem("loggedInUser",""); 
-    props.changeUser(''); 
-    // window.location.reload(); 
+const Header = () => {
+  const {userData} = useContext(AuthContext);
+  let name = ""; 
+  let role = ""; 
+  if(userData){
+    name = userData.name
+    role = userData.role
   }
   return (
     <div>
-        <div className='flex items-end justify-between'>
-            <h1 className='text-2xl font-semibold'>Hello, <br /> <span className='text-3xl'>dear 👋</span></h1>
-            <button onClick={logOut} className='bg-red-400 px-3 py-2 text-lg font-medium rounded-lg '>Logout</button>
+        <div className="max-w-screen-xl flex items-center justify-between mx-auto p-5 ">
+            <h1 className='text-xl font-semibold'>Hello <span className='text-2xl'>{name} !</span> {role == "admin" ? <span className='text-xl text-blue-400'>Give Task To Employees</span>: <span className='text-xl text-blue-400'>Complete your Work </span> }</h1>
         </div>
     </div>
   )

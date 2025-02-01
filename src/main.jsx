@@ -4,9 +4,14 @@ import './index.css'
 import App from './App.jsx'
 import AuthProvider from './context/AuthProvider.jsx'
 
-createRoot(document.getElementById('root')).render(
+import { RouterProvider } from 'react-router-dom'
+import Router from './router/Router.jsx'
 
-    <AuthProvider>
-      <App/>
-    </AuthProvider>
+createRoot(document.getElementById('root')).render(
+  <AuthProvider>
+    <RouterProvider router={Router}>
+
+      <App />
+    </RouterProvider>
+  </AuthProvider>
 )
