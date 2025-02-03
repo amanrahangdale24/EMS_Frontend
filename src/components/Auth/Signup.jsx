@@ -36,7 +36,7 @@ const Signup = () => {
             }
         } catch (error) {
             console.error("Signup Error:", error);
-            toast.error("Something went wrong");
+            toast.error(error);
         }
 
         setFormData({
