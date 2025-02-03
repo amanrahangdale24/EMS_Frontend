@@ -1,55 +1,59 @@
 import React, { useContext, useState } from 'react';
 import { AuthContext } from '../../context/AuthProvider';
+import httpAction from '../../utils/httpAction';
+import apis from '../../api/apis';
+import toast from 'react-hot-toast';
 
-const CreateTask = () => {
-
+const CreateTask = ({ employees, setEmployees }) => {
     const [taskTitle, setTaskTitle] = useState('');
     const [taskDate, setTaskDate] = useState('');
     const [taskCategory, setTaskCategory] = useState('');
     const [assignedTo, setAssignedTo] = useState('');
     const [taskDesc, setTaskDesc] = useState('');
 
-    // const [userData,setUserData] = useContext(AuthContext);
-
-    const newTask = {
-        taskTitle,
-        taskDate,
-        taskCategory,
-        taskDesc,
-        active: false,
-        newTask: true,
-        failed: false,
-        completed: false
-    }
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+       
+        try {
+            const response = await httpAction({
+                url: apis().crateTask, // API endpoint
+                method: "POST",
+                body: JSON.stringify({
+                    taskTitle,
+                    taskDescription: taskDesc,
+                    taskDate,
+                    category: taskCategory,
+                    employeeName: assignedTo,
+                }),
+                credentials: "include",
+            });
 
-        const data = userData;
+            if (response?.status) {
+                toast.success("Task assigned successfully!");
 
-        {
-            data.forEach(function (elem) {
-                if (assignedTo == elem.firstName) {
-                    elem.tasks.push(newTask);
-                    elem.taskNumbers.newTask += 1;
-                }
-            })
+                // Update employee task count in UI
+                setEmployees((prevEmployees) =>
+                    prevEmployees.map((emp) =>
+                        emp.name === assignedTo
+                            ? { ...emp, taskNumbers: { ...emp.taskNumbers, newTask: emp.taskNumbers.newTask + 1 } }
+                            : emp
+                    )
+                );
+
+                // Clear input fields
+                setTaskTitle('');
+                setTaskDate('');
+                setTaskCategory('');
+                setAssignedTo('');
+                setTaskDesc('');
+            } else {
+                toast.error(response.message || "Task assignment failed");
+            }
+        } catch (error) {
+            console.error("Error assigning task:", error);
+            toast.error("Something went wrong");
         }
-
-        // setUserData(data); 
-
-        // console.log(userData);
-
-
-
-
-        setTaskTitle('');
-        setTaskDate('');
-        setTaskCategory('');
-        setAssignedTo('');
-        setTaskDesc('');
-    }
-
+    };
 
     return (
         <div className="max-w-screen-xl flex items-center justify-between mx-auto ">

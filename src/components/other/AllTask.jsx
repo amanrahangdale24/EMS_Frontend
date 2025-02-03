@@ -1,7 +1,10 @@
 import React, { useContext } from 'react'
 import { AuthContext } from '../../context/AuthProvider'
-const AllTask = () => {
-  // const [userData] = useContext(AuthContext);
+const AllTask = ({employees}) => {
+  if(!employees){
+    return <div>Loading...</div>
+  }
+  console.log(employees);
   const userData = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
 
   return (
@@ -45,13 +48,13 @@ const AllTask = () => {
 
 
         <div>
-          {userData.map((ele, idx) => {
+          {employees.map((ele, idx) => {
             return <div key={idx} className='flex text-xl w-full rounded-md mb-2 px-4 py-3 border-2 border-emerald-500 justify-between items-center '>
-              <h2 className='w-1/5 '>Aman</h2>
-              <h2 className='w-1/5 text-purple-300'>4</h2>
-              <h2 className='w-1/5 text-blue-400'>2</h2>
-              <h2 className='w-1/5 text-yellow-400'>10</h2>
-              <h2 className='w-1/5 text-red-300'>1</h2>
+              <h2 className='w-1/5 '>{ele.name}</h2>
+              <h2 className='w-1/5 text-purple-300'>{ele.taskNumbers.newTask}</h2>
+              <h2 className='w-1/5 text-blue-400'>{ele.taskNumbers.active}</h2>
+              <h2 className='w-1/5 text-yellow-400'>{ele.taskNumbers.completed}</h2>
+              <h2 className='w-1/5 text-red-300'>{ele.taskNumbers.failed}</h2>
 
 
             </div>

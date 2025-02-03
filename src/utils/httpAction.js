@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 
 const httpAction = async (data) => {
-    try {
+    
         const response = await fetch(data.url, {
             method: data.method || 'GET',
             body: data.formData || (data.body ? data.body : null),
@@ -18,10 +18,7 @@ const httpAction = async (data) => {
         // console.log("API Response:", result);
         return result;
 
-    } catch (error) {
-        
-        toast.error(error.message);
-    }
+    
 };
 
 export default httpAction;

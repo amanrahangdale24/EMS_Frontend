@@ -14,13 +14,32 @@ const Login = () => {
     });
 
     const {navigate}  = useProvideHooks(); // ✅ Corrected navigation hook
-    const { setUserdata } = useContext(AuthContext); // ✅ Get context function
+    const { setUserdata, setTasks} = useContext(AuthContext); // ✅ Get context function
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
 
+    const fetchTasks = async (employeeId) => {
+        try {
+          const response = await httpAction({
+            url: `${apis().getTasks}/${employeeId}`,
+            method: 'GET',
+            credentials: 'include',
+          });
+    
+          if (response?.status) {
+            setTasks(response.tasks); // Store fetched tasks in state
+          } else {
+            setTasks([]); // Empty array if no tasks found
+          }
+        } catch (error) {
+          console.error("Error fetching tasks:", error);
+          setTasks([]); // Empty array in case of error
+        }
+      };
+    
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
@@ -35,6 +54,7 @@ const Login = () => {
 
             if (result?.status) {
                 setUserdata(result.user); 
+                fetchTasks(result.user.userId);
                 navigate('/')
                 toast.success("User Logged In Successfully")
                 
@@ -51,6 +71,8 @@ const Login = () => {
             password: "",
         });
     };
+
+    
     return (
         <>
             <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">

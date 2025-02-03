@@ -3,7 +3,7 @@ import Header from '../other/Header'
 import TaskListNumbers from '../other/TaskListNumbers'
 import TaskList from '../tasklist/TaskList'
 
-const EmployeeDashboard = (props) => {
+const EmployeeDashboard = () => {
   
   return (
     // <div>

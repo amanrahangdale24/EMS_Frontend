@@ -8,7 +8,7 @@ import useProvideHooks from '../hooks/useProvider'
 import toast from 'react-hot-toast'
 
 const Navbar = () => {
-  const { userData, setUserdata } = useContext(AuthContext);
+  const { userData, setUserdata,setTasks } = useContext(AuthContext);
   const {navigate} = useProvideHooks(); 
   let role = "";
   if (userData) {
@@ -26,6 +26,7 @@ const Navbar = () => {
       });
 
       setUserdata(null);
+      setTasks([]); 
       toast.success("User Logged Out Succuessfully")
       navigate('/login')
     } catch (error) {

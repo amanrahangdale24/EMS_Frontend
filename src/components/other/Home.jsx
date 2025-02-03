@@ -10,9 +10,12 @@ const Home = () => {
   let role = "";
   if(userData){
     role = userData.role
-  }else{
-    console.log("no user found")
   }
+ 
+
+  
+
+
 
   const navigateToPage = ()=>{
     if(role == "admin"){
