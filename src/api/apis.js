@@ -1,19 +1,21 @@
-const apis =()=>{
-    const local = "https://ems-backend-final.onrender.com/"
-    const list = {
-        registerUser : `${local}user/register`,
-        loginUser : `${local}user/login`,
-        getUserDetails: `${local}user/getUserDetails`,
-        logout: `${local}user/logout`,
-        getTasks:`${local}task/get`,
-        acceptTask:`${local}task/acceptTask`,
-        markAsCompleted:`${local}task/markCompleted`,
-        markAsFailed:`${local}task/markFailed`,
-        crateTask:`${local}task/create`,
-        all_employees:`${local}emp/employees`
-    }
+const local = "http://localhost:5000/";
+const production = "https://ems-backend-final.onrender.com/";
 
-    return list
-}
+const baseURL = window.location.origin.includes("localhost") ? local : production;
 
-export default apis; 
+const apis = () => {
+    return {
+        registerUser: `${baseURL}user/register`,
+        loginUser: `${baseURL}user/login`,
+        getUserDetails: `${baseURL}user/getUserDetails`,
+        logout: `${baseURL}user/logout`,
+        getTasks: `${baseURL}task/get`,
+        acceptTask: `${baseURL}task/acceptTask`,
+        markAsCompleted: `${baseURL}task/markCompleted`,
+        markAsFailed: `${baseURL}task/markFailed`,
+        createTask: `${baseURL}task/create`,
+        all_employees: `${baseURL}emp/employees`
+    };
+};
+
+export default apis;
