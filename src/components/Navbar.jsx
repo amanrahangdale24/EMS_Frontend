@@ -15,8 +15,8 @@ const Navbar = () => {
     role = userData.role;
   }
 
-  // const {navigate} = useProvideHooks(); 
-
+   
+// const {navigate} = useProvideHooks();
   const logout = async () => {
     try {
       await httpAction({
