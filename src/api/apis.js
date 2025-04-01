@@ -1,5 +1,5 @@
 const apis =()=>{
-    const local = "http://localhost:4044/"
+    const local = "https://ems-backend-final.onrender.com/"
     const list = {
         registerUser : `${local}user/register`,
         loginUser : `${local}user/login`,
